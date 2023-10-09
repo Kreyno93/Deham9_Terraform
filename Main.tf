@@ -20,6 +20,6 @@ resource "aws_s3_bucket" "Deham9_Kreyno93_Demo_Bucket"{
   bucket = "ck-demo-bucket"
 
   tags = {
-    Name = "S3Bucket"
+    Name = "Deham9_Kreyno93_Demo_Bucket"
   }
 }
