@@ -16,8 +16,8 @@ provider "aws" {
 }
 
 #Resource to create s3 bucket
-resource "aws_s3_bucket" "BratwurstBratGeraet9000"{
-  bucket = "BratwurstBratGeraet9000"
+resource "aws_s3_bucket" "bratwurstbratgeraet9000"{
+  bucket = "bratwurstbratgeraet9000"
 
   tags = {
     Name = "S3Bucket"
