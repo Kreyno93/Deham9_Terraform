@@ -6,6 +6,6 @@ resource "aws_vpc" "provisionerVPC"{
     enable_dns_support = true
 
     tags = {
-        Name = "dev-terraform-vpc"
+        Name = "Deham9_VPC"
     }
 }
