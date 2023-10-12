@@ -24,14 +24,25 @@ resource "aws_s3_bucket" "bratwurstbratgeraet9000"{
   }
 }
 
+resource "aws_s3_bucket_public_access_block" "bratwurstbratgeraet9000" {
+  bucket = aws_s3_bucket.bratwurstbratgeraet9000.id
+
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = true
+  restrict_public_buckets = false
+}
+
 resource "aws_instance" "Deham9-EC2-Instance" {
   ami           = "ami-0ea7dc624e77a15d5" # Specify the AMI ID (Amazon Machine Image) for your desired OS
   instance_type = "t3.micro"              # Specify the instance type
   key_name = "Deham9-KeyPair"
+  user_data = file("userdata.sh")
 
   tags = {
     Name = "Deham9_EC2_Instance"
   }
+
 }
 
 # Define a security group to allow SSH access
