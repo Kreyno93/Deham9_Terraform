@@ -12,7 +12,7 @@ terraform {
 #Provider profile and region in which all the resources will create
 provider "aws" {
   profile = "default"
-  region  = "eu-north-1"
+  region  = "us-west-2"
 }
 
 #Resource to create s3 bucket
@@ -34,8 +34,8 @@ resource "aws_s3_bucket_public_access_block" "bratwurstbratgeraet9000" {
 }
 
 resource "aws_instance" "Deham9-EC2-Instance" {
-  ami           = "ami-0ea7dc624e77a15d5" # Specify the AMI ID (Amazon Machine Image) for your desired OS
-  instance_type = "t3.micro"              # Specify the instance type
+  ami           = "ami-07d07d65c47e5aa90" # Specify the AMI ID (Amazon Machine Image) for your desired OS
+  instance_type = "t2.micro"              # Specify the instance type
   key_name = "Deham9-KeyPair"
   user_data = file("userdata.sh")
 
