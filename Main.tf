@@ -75,4 +75,3 @@ resource "aws_security_group" "Deham9-EC2-Instance-ssh" {
   tags = {
     Name = "Deham9-EC2-Instance-ssh"
   }
-}
