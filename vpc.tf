@@ -9,3 +9,37 @@ resource "aws_vpc" "Deham9-VPC"{
         Name = "Deham9-VPC"
     }
 }
+
+# Define the public subnet
+resource "aws_subnet" "public_subnet" {
+  vpc_id                  = aws_vpc.Deham9-VPC.id
+  cidr_block              = "10.0.0.0/24"
+  availability_zone       = "eu-north-1a"  # Change to your desired availability zone
+  map_public_ip_on_launch  = true
+}
+
+# Define the private subnet
+resource "aws_subnet" "private_subnet" {
+  vpc_id                  = aws_vpc.Deham9-VPC.id
+  cidr_block              = "10.0.2.0/23"
+  availability_zone       = "eu-north-1a"  # Change to your desired availability zone
+}
+
+# Optionally, you can create an internet gateway for the VPC and attach it to the public subnet for internet access.
+resource "aws_internet_gateway" "my_igw" {
+  vpc_id = aws_vpc.Deham9-VPC.id
+}
+
+resource "aws_route_table" "public_route" {
+  vpc_id = aws_vpc.Deham9-VPC.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.my_igw.id
+  }
+}
+
+resource "aws_route_table_association" "public_subnet_association" {
+  subnet_id      = aws_subnet.public_subnet.id
+  route_table_id = aws_route_table.public_route.id
+}
