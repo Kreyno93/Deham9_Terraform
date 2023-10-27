@@ -102,10 +102,15 @@ resource "aws_security_group" "Deham9_Private_SG" {
   }
 }
 
+resource "aws_key_pair" "Deham9-Bastion-KeyPair" {
+  key_name   = "Deham9-Bastion-KeyPair"
+  public_key = file("Deham9-Bastion-KeyPair.pub")
+}
+
 resource "aws_instance" "Deham9-Bastion" {
   ami             = "ami-0bb29480f5276e843" # Specify the AMI ID (Amazon Machine Image) for your desired OS
   instance_type   = "t3.micro"              # Specify the instance type
-  key_name        = "Deham9-KeyPair"
+  key_name        = "Deham9-Bastion-KeyPair"
   subnet_id       = aws_subnet.public_subnet.id
   security_groups = [aws_security_group.Deham9_Public_SG.id]
   user_data       = <<-EOF
