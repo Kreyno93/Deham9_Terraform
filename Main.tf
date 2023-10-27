@@ -16,34 +16,23 @@ provider "aws" {
 }
 
 #Resource to create s3 bucket
-# resource "aws_s3_bucket" "deham9-secret-bucket" {
-#   bucket = "deham9-secret-bucket"
+resource "aws_s3_bucket" "deham9-secret-bucket" {
+  bucket = "deham9-secret-bucket"
 
-#   tags = {
-#     Name = "S3Bucket"
-#   }
-# }
 
-# resource "aws_s3_bucket_public_access_block" "deham9-secret-bucket" {
-#   bucket = aws_s3_bucket.deham9-secret-bucket.id
+  tags = {
+    Name = "S3Bucket"
+  }
+}
 
-#   block_public_acls       = false
-#   block_public_policy     = false
-#   ignore_public_acls      = true
-#   restrict_public_buckets = false
-# }
+resource "aws_s3_bucket_public_access_block" "deham9-secret-bucket" {
+  bucket = aws_s3_bucket.deham9-secret-bucket.id
 
-# resource "aws_instance" "Deham9-Bastion" {
-#   ami           = "ami-0bb29480f5276e843" # Specify the AMI ID (Amazon Machine Image) for your desired OS
-#   instance_type = "t3.micro"              # Specify the instance type
-#   key_name      = "Deham9-KeyPair"
-#   user_data     = file("userdata.sh")
-
-#   tags = {
-#     Name = "Deham9-Bastion"
-#   }
-
-# }
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = true
+  restrict_public_buckets = false
+}
 
 # Define a security group to allow SSH access
 resource "aws_security_group" "Deham9_Public_SG" {
