@@ -124,7 +124,7 @@ resource "aws_instance" "Deham9-Docker-Website" {
               sudo systemctl enable docker
               sudo usermod -a -G docker ec2-user
               sudo docker pull miischa/rickandmorty-gallery
-              sudo docker run -d -p 80:80 miischa/rickandmorty-gallery
+              sudo docker run -d -p 80:3000 miischa/rickandmorty-gallery
               EOF
 
   tags = {
