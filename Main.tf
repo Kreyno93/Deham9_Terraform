@@ -11,7 +11,8 @@ terraform {
 
 #Provider profile and region in which all the resources will creates
 provider "aws" {
-  profile = "default"
+  access_key = "AWS_ACCESS_KEY"
+  secret_key = "AWS_SECRET_ACCESS_KEY"
   region  = "eu-north-1"
 }
 
