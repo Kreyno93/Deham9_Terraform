@@ -11,8 +11,7 @@ terraform {
 
 #Provider profile and region in which all the resources will creates
 provider "aws" {
-  access_key = "AWS_ACCESS_KEY"
-  secret_key = "AWS_SECRET_ACCESS_KEY"
+  profile = "default"
   region  = "eu-north-1"
 }
 
@@ -110,6 +109,30 @@ resource "aws_instance" "Deham9-Bastion" {
 
 }
 
+resource "aws_instance" "Deham9-Docker-Website" {
+  ami             = "ami-06e56377934537e76" # Specify the AMI ID (Amazon Machine Image) for your desired OS
+  instance_type   = "t3.micro"              # Specify the instance type
+  key_name        = "Deham9-KeyPair"
+  subnet_id       = aws_subnet.public_subnet.id
+  security_groups = [aws_security_group.Deham9_Public_SG.id]
+  user_data       = <<-EOF
+              #!/bin/bash
+              exec > /var/log/user-data.log 2>&1
+              yum install -y openssh-clients
+              sudo yum install -y docker
+              sudo systemctl start docker
+              sudo systemctl enable docker
+              sudo usermod -a -G docker ec2-user
+              sudo docker pull miischa/rickandmorty-gallery
+              sudo docker run -d -p 80:80 miischa/rickandmorty-gallery
+              EOF
+
+  tags = {
+    Name = "Deham9-Docker-Website"
+  }
+
+}
+
 resource "aws_instance" "Deham9_Private1" {
   ami             = "ami-06e56377934537e76"
   instance_type   = "t3.micro"
@@ -122,12 +145,6 @@ resource "aws_instance" "Deham9_Private1" {
                     echo 'lab-password' | passwd ec2-user --stdin
                     sed -i 's|[#]*PasswordAuthentication no|PasswordAuthentication yes|g' /etc/ssh/sshd_config
                     systemctl restart sshd.service
-                    sudo yum install -y docker
-                    sudo systemctl start docker
-                    sudo systemctl enable docker
-                    sudo usermod -a -G docker ec2-user
-                    sudo docker pull miischa/rickandmorty-gallery
-                    sudo docker run -d -p 80:80 miischa/rickandmorty-gallery
                  EOF 
 
   tags = {
