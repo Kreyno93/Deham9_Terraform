@@ -122,6 +122,12 @@ resource "aws_instance" "Deham9_Private1" {
                     echo 'lab-password' | passwd ec2-user --stdin
                     sed -i 's|[#]*PasswordAuthentication no|PasswordAuthentication yes|g' /etc/ssh/sshd_config
                     systemctl restart sshd.service
+                    sudo yum install -y docker
+                    sudo systemctl start docker
+                    sudo systemctl enable docker
+                    sudo usermod -a -G docker ec2-user
+                    sudo docker pull miischa/rickandmorty-gallery
+                    sudo docker run -d -p 80:80 miischa/rickandmorty-gallery
                  EOF 
 
   tags = {
