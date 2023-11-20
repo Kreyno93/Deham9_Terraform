@@ -1,7 +1,7 @@
 # Not yet finished
 resource "aws_rds_cluster" "auroracluster" {
   cluster_identifier        = "auroracluster"
-  availability_zones        = ["us-west-2a", "us-west-2b"]
+  availability_zones        = ["eu-north-1a", "eu-north-1b"]
   engine                    = "aurora-mysql"
   engine_version            = "5.7.mysql_aurora.2.11.1"
   
@@ -10,8 +10,8 @@ resource "aws_rds_cluster" "auroracluster" {
   master_password           = "mustbeeightcharaters"
   skip_final_snapshot       = true
   final_snapshot_identifier = "aurora-final-snapshot"
-  db_subnet_group_name = aws_db_subnet_group.db_subnet.name
-  vpc_security_group_ids = [aws_security_group.allow_aurora_access.id]
+  db_subnet_group_name      = "aurora-subnet-group"
+  vpc_security_group_ids    = [aws_security_group.aurora_db_security_group.id]
   tags = {
     Name = "auroracluster-db"
   }

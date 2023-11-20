@@ -54,3 +54,22 @@ resource "aws_security_group" "Deham9_Private_SG" {
     Name = "Deham9_Private_SG"
   }
 }
+
+resource "aws_security_group" "aurora_db_security_group" {
+  name        = "aurora-db-sg"
+  description = "Security group for Aurora database"
+
+  ingress {
+    from_port = 3306  # Assuming your Aurora database is using the default MySQL port
+    to_port   = 3306
+    protocol  = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]  # Adjust the CIDR block to match your specific requirements
+  }
+
+  egress {
+    from_port = 0
+    to_port   = 0
+    protocol  = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
